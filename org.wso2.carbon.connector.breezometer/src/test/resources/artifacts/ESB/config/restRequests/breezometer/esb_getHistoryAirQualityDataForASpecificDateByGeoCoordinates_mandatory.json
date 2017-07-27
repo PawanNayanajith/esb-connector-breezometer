@@ -1,0 +1,8 @@
+{
+  "apiUrl": "%s(apiUrl)",
+  "apiKey": "%s(apiKey)",
+  "lat": "%s(lat)",
+  "lon": "%s(lon)",
+  "dateTime": "%s(dateTime)",
+  "blocking":"true"
+}

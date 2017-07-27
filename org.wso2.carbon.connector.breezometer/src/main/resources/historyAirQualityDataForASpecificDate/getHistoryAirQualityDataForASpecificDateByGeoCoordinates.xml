@@ -1,0 +1,61 @@
+<!--
+   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 Inc. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+<template name="getHistoryAirQualityDataForASpecificDateByGeoCoordinates" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="dateTime" description="The specific time you wish to get air quality data for."/>
+    <parameter name="lat"
+               description="Latitude : north-south position of a point on the earth's surface.Range between -90 to 90."/>
+    <parameter name="lon"
+               description="Longitude : east-west position of a point on the earth's surface.Range between -180 to 180"/>
+    <!-- Optional Parameter -->
+    <parameter name="lang" description="Response language. Support English(en) and Hebrew(he)"/>
+    <sequence>
+        <property name="uri.var.dateTime" expression="$func:datetime"/>
+        <property name="uri.var.lat" expression="$func:lat"/>
+        <property name="uri.var.lon" expression="$func:lon"/>
+        <property name="uri.var.lang" expression="$func:lang"/>
+        <script language="js">
+            <![CDATA[
+                var lang = mc.getProperty('uri.var.lang');
+                var urlQuery = '';
+                if (lang != null && lang != ""){
+                   urlQuery  = urlQuery.concat('&lang=',lang) ;
+                }
+
+                mc.setProperty('uri.var.urlQuery',urlQuery);
+            ]]>
+        </script>
+        <filter source="$ctx:breezoMeterBlocking" regex="true">
+            <then>
+                <call blocking="true">
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/baqi/?dateTime={uri.var.dateTime}&amp;lat={uri.var.lat}&amp;lon={uri.var.lon}&amp;key={uri.var.apiKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </then>
+            <else>
+                <call>
+                    <endpoint>
+                        <http method="get"
+                              uri-template="{uri.var.apiUrl}/baqi/?dateTime={uri.var.dateTime}&amp;lat={uri.var.lat}&amp;lon={uri.var.lon}&amp;key={uri.var.apiKey}{+uri.var.urlQuery}"/>
+                    </endpoint>
+                </call>
+            </else>
+        </filter>
+    </sequence>
+</template>

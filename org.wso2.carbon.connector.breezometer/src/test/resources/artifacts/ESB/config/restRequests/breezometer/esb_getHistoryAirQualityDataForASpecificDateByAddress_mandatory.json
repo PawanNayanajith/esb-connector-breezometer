@@ -1,0 +1,11 @@
+{
+  "apiUrl": "%s(apiUrl)",
+  "apiKey": "%s(apiKey)",
+  "location": "%s(location)",
+  "dateTime": "%s(dateTime)",
+  "blocking":"true"
+}
+
+
+
+

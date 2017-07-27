@@ -1,0 +1,13 @@
+{
+  "apiUrl": "%s(apiUrl)",
+  "apiKey": "%s(apiKey)",
+  "location": "%s(location)",
+  "start_datetime": "%s(start_datetime)",
+  "end_datetime": "%s(end_datetime)",
+  "blocking":"true"
+}
+
+
+
+
+

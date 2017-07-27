@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+   WSO2 Inc. licenses this file to you under the Apache License,
+   Version 2.0 (the "License"); you may not use this file except
+   in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied. See the License for the
+   specific language governing permissions and limitations
+   under the License.
+-->
+
+<proxy xmlns="http://ws.apache.org/ns/synapse"
+       name="breezometer"
+       transports="https http"
+       startOnLoad="true"
+       trace="disable">
+    <description/>
+    <target>
+        <inSequence>
+            <property name="apiUrl" expression="json-eval($.apiUrl)"/>
+            <property name="apiKey" expression="json-eval($.apiKey)"/>
+            <property name="location" expression="json-eval($.location)"/>
+            <property name="lat" expression="json-eval($.lat)"/>
+            <property name="lon" expression="json-eval($.lon)"/>
+            <property name="dateTime" expression="json-eval($.dateTime)"/>
+            <property name="start_dateTime" expression="json-eval($.start_dateTime)"/>
+            <property name="end_dateTime" expression="json-eval($.end_dateTime)"/>
+            <property name="lang" expression="json-eval($.lang)"/>
+            <property name="interval" expression="json-eval($.interval)"/>
+            <property name="blocking" expression="json-eval($.blocking)"/>
+            <breezometer.init>
+                <apiUrl>{$ctx:apiUrl}</apiUrl>
+                <apiKey>{$ctx:apiKey}</apiKey>
+                <breezoMeterBlocking>{$ctx:blocking}</breezoMeterBlocking>
+            </breezometer.init>
+            <switch source="get-property('transport','Action')">
+                <case regex="urn:getRealTimeAirQualityIndexByAddress">
+                    <breezometer.getRealTimeAirQualityIndexByAddress>
+                        <location>{$ctx:location}</location>
+                        <lang>{$ctx:lang}</lang>
+                    </breezometer.getRealTimeAirQualityIndexByAddress>
+                </case>
+                <case regex="urn:getRealTimeAirQualityIndexByGeoCoordinates">
+                    <breezometer.getRealTimeAirQualityIndexByGeoCoordinates>
+                        <lat>{$ctx:lat}</lat>
+                        <lon>{$ctx:lon}</lon>
+                        <lang>{$ctx:lang}</lang>
+                    </breezometer.getRealTimeAirQualityIndexByGeoCoordinates>
+                </case>
+                <case regex="urn:getHistoryAirQualityDataForASpecificDateByAddress">
+                    <breezometer.getHistoryAirQualityDataForASpecificDateByAddress>
+                        <dateTime>{$ctx:dateTime}</dateTime>
+                        <location>{$ctx:location}</location>
+                        <lang>{$ctx:lang}</lang>
+                    </breezometer.getHistoryAirQualityDataForASpecificDateByAddress>
+                </case>
+                <case regex="urn:getHistoryAirQualityDataForASpecificDateByGeoCoordinates">
+                    <breezometer.getHistoryAirQualityDataForASpecificDateByGeoCoordinates>
+                        <dateTime>{$ctx:dateTime}</dateTime>
+                        <lat>{$ctx:lat}</lat>
+                        <lon>{$ctx:lon}</lon>
+                        <lang>{$ctx:lang}</lang>
+                    </breezometer.getHistoryAirQualityDataForASpecificDateByGeoCoordinates>
+                </case>
+                <case regex="urn:getHistoryAirQualityDataForARangeOfDatesByAddress">
+                    <breezometer.getHistoryAirQualityDataForARangeOfDatesByAddress>
+                        <start_dateTime>{$ctx:start_dateTime}</start_dateTime>
+                        <end_dateTime>{$ctx:end_dateTime}</end_dateTime>
+                        <location>{$ctx:location}</location>
+                        <lang>{$ctx:lang}</lang>
+                        <interval>{$ctx:interval}</interval>
+                    </breezometer.getHistoryAirQualityDataForARangeOfDatesByAddress>
+                </case>
+                <case regex="urn:getHistoryAirQualityDataForARangeOfDatesByGeoCoordinates">
+                    <breezometer.getHistoryAirQualityDataForARangeOfDatesByGeoCoordinates>
+                        <start_dateTime>{$ctx:start_dateTime}</start_dateTime>
+                        <end_dateTime>{$ctx:end_dateTime}</end_dateTime>
+                        <lat>{$ctx:lat}</lat>
+                        <lon>{$ctx:lon}</lon>
+                        <lang>{$ctx:lang}</lang>
+                        <interval>{$ctx:interval}</interval>
+                    </breezometer.getHistoryAirQualityDataForARangeOfDatesByGeoCoordinates>
+                </case>
+            </switch>
+            <respond/>
+        </inSequence>
+    </target>
+</proxy>
