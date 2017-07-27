@@ -29,8 +29,5 @@
         <classes>
             <class name="org.wso2.carbon.connector.BreezometerIntegrationTest"/>
         </classes>
-        <!--<packages>-->
-        <!--<package name="org.wso2.carbon.connector.BreezometerIntegrationTest"/>-->
-        <!--</packages>-->
     </test>
 </suite>

@@ -32,7 +32,6 @@
                 if (lang != null && lang != ""){
                    urlQuery  = urlQuery.concat('&lang=',lang) ;
                 }
-
                 mc.setProperty('uri.var.urlQuery',urlQuery);
             ]]>
         </script>
