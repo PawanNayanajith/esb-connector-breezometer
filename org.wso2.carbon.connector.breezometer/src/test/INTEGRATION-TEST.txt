@@ -1,0 +1,39 @@
+Product: Integration tests for WSO2 ESB Breezometer connector
+
+ Pre-requisites:
+
+    - Maven 3.x
+    - Java 1.8
+    - The org.wso2.esb.integration.integration-base project is required. The test suite has been configured to download this project automatically. If the automatic download fails, download the following project and compile it using the mvn clean install command to update your local repository:
+      https://github.com/wso2-extensions/esb-integration-base
+
+    Tested Platforms:
+    - Microsoft WINDOWS V-10
+    - WSO2 ESB 5.0.0
+
+Steps to follow in setting integration test.
+
+ 1. Download WSO2 ESB 5.0.0 from official website.
+ 
+ 2. Copy the ESB 5.0.0 zip to the location "{BREEZOMETER_CONNECTORS_HOME}/repository/"
+
+ 3. Create a Breezometer account and derive the API Key.
+       i)  Using the URL "https://developers.breezometer.com/dashboard#/keys" 
+
+ 4. Update the Breezometer properties file at location "<BREEZOMETER_CONNECTOR_HOME>/src/test/resources/artifacts/ESB/connector/config" as below.
+
+        i)      apiUrl      		-   The API URL specific to the created Breezometer account (https://api.breezometer.com).
+    	ii)     apiKey				-   Use the api key obtained under step 2.
+    	iii)	location			-	Use a valid City name (E.g. Tokyo, Delhi).
+    	iv)	    lat				    -	Use a valid numerical value for City geo location, latitude. (E.g. 40.7324296)
+    	v)		lon				    -	Use a valid numerical value for City geo location, longitude.(E.g. -73.9977264)
+		vi)	    lang				-	Use a valid string language (E.g. en [Support languages : English(“en”) and Hebrew(“he”)])
+    	vii)	start_datetime		-	Use a valid start date and time in the given format (E.g. 2015-10-25T16:00:00)
+		viii)	end_datetime		-	Use a valid start date and time in the given format (E.g. 2015-10-26T16:00:00)
+		ix)	    dateTime			-	Use a valid date and a time in the given format (E.g. 2017-01-23T12:00:00)
+		x)		interval			-	Use a valid time interval represents a period of time (hours).You can choose an interval value (Integer) between 1-24 hours.
+		xi)	    invalid_location    -	Use a invalid City name (E.g. '1234').
+		xii)	invalid_lat		    -	Use a invalid City geo location, latitude (E.g. 'abcd').
+		
+ 5.  Navigate to "{BREEZOMETER_CONNECTORS_HOME}/" and run the following command.
+             $ mvn clean install
